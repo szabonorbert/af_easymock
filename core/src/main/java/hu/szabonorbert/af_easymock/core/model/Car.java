@@ -10,7 +10,16 @@ public class Car {
     private String type;
     private String manufacturer;
 
+    public Car(int id, int year, String color, String type, String manufacturer) {
+        this.id = id;
+        this.year = year;
+        this.color = color;
+        this.type = type;
+        this.manufacturer = manufacturer;
+    }
+
     public Car(int year, String color, String type, String manufacturer) {
+        this.id = 0;
         this.year = year;
         this.color = color;
         this.type = type;
