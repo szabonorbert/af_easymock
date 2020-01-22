@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Car {
 
+    private int id;
     private int year;
     private String color;
     private String type;
@@ -14,6 +15,14 @@ public class Car {
         this.color = color;
         this.type = type;
         this.manufacturer = manufacturer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getYear() {
@@ -49,11 +58,23 @@ public class Car {
     }
 
     @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", year=" + year +
+                ", color='" + color + '\'' +
+                ", type='" + type + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return year == car.year &&
+        return id == car.id &&
+                year == car.year &&
                 Objects.equals(color, car.color) &&
                 Objects.equals(type, car.type) &&
                 Objects.equals(manufacturer, car.manufacturer);
@@ -61,16 +82,6 @@ public class Car {
 
     @Override
     public int hashCode() {
-        return Objects.hash(year, color, type, manufacturer);
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "year=" + year +
-                ", color='" + color + '\'' +
-                ", type='" + type + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                '}';
+        return Objects.hash(id, year, color, type, manufacturer);
     }
 }
