@@ -16,11 +16,14 @@ public class CarDAO implements CarDAOinterface {
     }
 
     @Override
-    public void createCar(Car car){
-        if (car.getId() == 0 || isIdTaken(car.getId())){
-            car.setId(getLastId()+1);
+    public int createCar(Car car){
+        int new_car_id = car.getId();
+        if (new_car_id == 0 || isIdTaken(new_car_id)){
+            new_car_id = getLastId()+1;
+            car.setId(new_car_id);
         }
         db.add(car);
+        return new_car_id;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class CarDAO implements CarDAOinterface {
     }
 
     @Override
-    public void deleteCar(int id){
+    public boolean deleteCar(int id){
         int index = 0;
         int found_index = -1;
         for(Car c:db){
@@ -48,11 +51,13 @@ public class CarDAO implements CarDAOinterface {
         }
         if (found_index>-1){
             db.remove(found_index);
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void updateCar(Car car){
+    public boolean updateCar(Car car){
         int index = 0;
         int found_index = -1;
         for(Car c:db){
@@ -61,7 +66,9 @@ public class CarDAO implements CarDAOinterface {
         }
         if (found_index>-1){
             db.set(found_index, car);
+            return true;
         }
+        return false;
     }
 
     private int getLastId(){

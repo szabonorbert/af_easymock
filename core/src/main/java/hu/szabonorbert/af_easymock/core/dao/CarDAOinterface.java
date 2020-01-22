@@ -5,10 +5,10 @@ import java.util.LinkedList;
 
 public interface CarDAOinterface {
 
-    void createCar(Car car);
+    int createCar(Car car);
     Car readCar(int id);
     LinkedList<Car> readAllCars();
-    void deleteCar(int id);
-    void updateCar(Car car);
+    boolean deleteCar(int id);
+    boolean updateCar(Car car);
 
 }
