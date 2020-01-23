@@ -30,6 +30,7 @@ public class CarStore {
 
     public Car getCarCopyById(int id){
         Car c = garage.readCar(id);
+        if (c == null) return null;
         return c.copy();
     }
 

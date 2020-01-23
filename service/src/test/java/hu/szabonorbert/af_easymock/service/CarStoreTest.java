@@ -132,18 +132,67 @@ public class CarStoreTest {
     }
 
     @Test
-    public void getCarCopyById() {
-        /// ...
+    public void getCarCopyByIdTest() {
+
+        Car expected_return = new Car(3, 2014, "black", "Astra CC", "Opel");
+
+        EasyMock.expect(garage.readCar(3)).andReturn(new Car(3, 2014, "black", "Astra CC", "Opel"));
+        EasyMock.expect(garage.readCar(4)).andReturn(null);
+        EasyMock.replay(garage);
+
+        ///
+        Car result_car =  store.getCarCopyById(3);
+        Car result_car2 =  store.getCarCopyById(4);
+
+       assertTrue(expected_return.equals(result_car));
+       assertEquals(null, result_car2);
     }
 
     @Test
     public void listCarsByColor() {
-        /// ...
+        LinkedList<Car> dummyDB = new LinkedList();
+        dummyDB.add(new Car(1, 2005, "grey", "Megane CC", "Renault"));
+        dummyDB.add(new Car(2, 2009, "red", "Focus CC", "Ford"));
+        dummyDB.add(new Car(3, 2014, "black", "Astra CC", "Opel"));
+
+        EasyMock.expect(garage.readAllCars()).andReturn(dummyDB);
+        EasyMock.expect(garage.readAllCars()).andReturn(dummyDB);
+        EasyMock.replay(garage);
+
+        //
+
+        LinkedList<Car> result1 = store.listCarsByColor("grey");
+        LinkedList<Car> result2 = store.listCarsByColor("red");
+
+        //
+
+        assertEquals(1, result1.size());
+        assertEquals(1, result2.size());
+
+        assertThat(result1, hasItem(new Car(1, 2005, "grey", "Megane CC", "Renault")));
+        assertThat(result2, hasItem(new Car(2, 2009, "red", "Focus CC", "Ford")));
     }
 
     @Test
-    public void listCars() {
-        /// ...
+    public void listCarsTest() {
+        LinkedList<Car> dummyDB = new LinkedList();
+        dummyDB.add(new Car(1, 2005, "grey", "Megane CC", "Renault"));
+        dummyDB.add(new Car(2, 2009, "red", "Focus CC", "Ford"));
+        dummyDB.add(new Car(3, 2014, "black", "Astra CC", "Opel"));
+
+        EasyMock.expect(garage.readAllCars()).andReturn(dummyDB);
+        EasyMock.replay(garage);
+
+        ///
+
+        LinkedList<Car> carlist = store.listCars();
+
+        ///
+
+        assertThat(carlist, hasItem(new Car(1, 2005, "grey", "Megane CC", "Renault")));
+        assertThat(carlist, hasItem(new Car(2, 2009, "red", "Focus CC", "Ford")));
+        assertThat(carlist, hasItem(new Car(3, 2014, "black", "Astra CC", "Opel")));
+        assertTrue(carlist.size() == 3);
     }
 
     @Test
