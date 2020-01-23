@@ -24,8 +24,13 @@ public class CarStore {
         return garage.createCar(car);
     }
 
-    public boolean removeCar(Car car){
+    public boolean removeCar(Car car) {
         return garage.deleteCar(car.getId());
+    }
+
+    public Car getCarCopyById(int id){
+        Car c = garage.readCar(id);
+        return c.copy();
     }
 
     public LinkedList<Car> listCarsByColor(String color){
@@ -33,6 +38,15 @@ public class CarStore {
         LinkedList<Car> ret = new LinkedList<Car>();
         for(Car c: allCars){
             if (c.getColor().equals(color)) ret.add(c);
+        }
+        return ret;
+    }
+
+    public LinkedList<Car> listCars(){
+        LinkedList<Car> allCars = garage.readAllCars();
+        LinkedList<Car> ret = new LinkedList<Car>();
+        for(Car c: allCars){
+            ret.add(c.copy());
         }
         return ret;
     }

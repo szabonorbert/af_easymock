@@ -66,6 +66,10 @@ public class Car {
         this.manufacturer = manufacturer;
     }
 
+    public Car copy(){
+        return new Car(id, year, color, type, manufacturer);
+    }
+
     @Override
     public String toString() {
         return "Car{" +
