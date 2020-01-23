@@ -56,7 +56,7 @@ public class CarStoreTest {
     }
 
     @Test
-    public void addCar() {
+    public void addCarTest() {
         LinkedList<Car> dummyDB = new LinkedList();
         dummyDB.add(new Car(1, 2005, "grey", "Megane CC", "Renault"));
 
