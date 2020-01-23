@@ -20,14 +20,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/easymock/easymock/4.1/easymock-4.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" scope="TEST" name="org.easymock:easymock:4.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest:2.2" level="project" />
   </component>
 </module>
