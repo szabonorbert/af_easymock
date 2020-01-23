@@ -6,8 +6,7 @@ import hu.szabonorbert.af_easymock.dao.CarDAO;
 import hu.szabonorbert.af_easymock.core.model.Car;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.easymock.EasyMock;
 import org.easymock.Mock;
@@ -49,6 +48,9 @@ public class CarStoreTest {
         ///
 
         LinkedList<Car> carlist = store.listCars();
+
+        ///
+
         assertThat(carlist, hasItem(new Car(1, 2005, "grey", "Megane CC", "Renault")));
         assertThat(carlist, hasItem(new Car(2, 2009, "red", "Focus CC", "Ford")));
         assertThat(carlist, hasItem(new Car(3, 2014, "black", "Astra CC", "Opel")));
@@ -57,41 +59,100 @@ public class CarStoreTest {
 
     @Test
     public void addCarTest() {
-        LinkedList<Car> dummyDB = new LinkedList();
-        dummyDB.add(new Car(1, 2005, "grey", "Megane CC", "Renault"));
 
+        Car oldCar = new Car(1, 2005, "grey", "Megane CC", "Renault");
         Car newCar = new Car(2, 2009, "red", "Focus CC", "Ford");
 
-        LinkedList<Car> dummyDB2 = new LinkedList();
+        LinkedList<Car> dummyDB = new LinkedList<Car>();
+        dummyDB.add(oldCar);
+
+        LinkedList<Car> dummyDB2 = new LinkedList<Car>();
+        dummyDB2.add(oldCar);
         dummyDB2.add(newCar);
 
         EasyMock.expect(garage.readAllCars()).andReturn(dummyDB);
         EasyMock.expect(garage.createCar(newCar)).andReturn(2);
         EasyMock.expect(garage.readAllCars()).andReturn(dummyDB2);
+
         EasyMock.replay(garage);
+
+        //
+
+        LinkedList<Car> carlist = store.listCars();
+        int new_id = store.addCar(newCar);
+        LinkedList<Car> carlist2 = store.listCars();
+
+        //
+
+        assertEquals(1, carlist.size());
+        assertEquals(2, carlist2.size());
+        assertEquals(2, new_id);
+        assertThat(carlist, hasItem(oldCar));
+        assertThat(carlist, not(hasItem(newCar)));
+        assertThat(carlist2, hasItem(oldCar));
+        assertThat(carlist2, hasItem(newCar));
+
     }
 
     @Test
-    public void removeCar() {
+    public void removeCarTest() {
+
+        Car oldCar = new Car(1, 2005, "grey", "Megane CC", "Renault");
+        Car newCar = new Car(2, 2009, "red", "Focus CC", "Ford");
+
+        LinkedList<Car> dummyDB = new LinkedList<Car>();
+        dummyDB.add(oldCar);
+
+        LinkedList<Car> dummyDB2 = new LinkedList<Car>();
+        dummyDB2.add(oldCar);
+        dummyDB2.add(newCar);
+
+        EasyMock.expect(garage.readAllCars()).andReturn(dummyDB2);
+        EasyMock.expect(garage.deleteCar(2)).andReturn(true);
+        EasyMock.expect(garage.readAllCars()).andReturn(dummyDB);
+
+        EasyMock.replay(garage);
+
+        //
+
+        LinkedList<Car> carlist = store.listCars();
+        boolean remove_result = store.removeCar(carlist.get(1));
+        LinkedList<Car> carlist2 = store.listCars();
+
+        //
+
+        assertEquals(2, carlist.size());
+        assertEquals(1, carlist2.size());
+        assertEquals(true, remove_result);
+        assertThat(carlist2, hasItem(oldCar));
+        assertThat(carlist2, not(hasItem(newCar)));
+        assertThat(carlist, hasItem(oldCar));
+        assertThat(carlist, hasItem(newCar));
+
     }
 
     @Test
     public void getCarCopyById() {
+        /// ...
     }
 
     @Test
     public void listCarsByColor() {
+        /// ...
     }
 
     @Test
     public void listCars() {
+        /// ...
     }
 
     @Test
     public void recolorCar() {
+        /// ...
     }
 
     @Test
     public void getOldestCar() {
+        /// ...
     }
 }
