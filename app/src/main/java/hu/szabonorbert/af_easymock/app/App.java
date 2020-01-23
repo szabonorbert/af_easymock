@@ -11,7 +11,7 @@ public class App {
         CarStore store = new CarStore(db);
         CarSalesman salesman = new CarSalesman(store);
 
-        System.out.println("- Wich cars do you have with color grey?");
+        System.out.println("- Which cars do you have with color grey?");
         System.out.println("> " + salesman.listCarsByColor("grey"));
         System.out.println("- List all the cars!");
         System.out.println("> " + salesman.listCars());
