@@ -12,6 +12,14 @@ public class CarStore {
         this.garage = cd;
     }
 
+    public CarDAO getGarage() {
+        return garage;
+    }
+
+    public void setGarage(CarDAO garage) {
+        this.garage = garage;
+    }
+
     public int addCar(Car car){
         return garage.createCar(car);
     }
