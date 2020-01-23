@@ -168,7 +168,6 @@ public class CarStoreTest {
 
         assertEquals(1, result1.size());
         assertEquals(1, result2.size());
-
         assertThat(result1, hasItem(new Car(1, 2005, "grey", "Megane CC", "Renault")));
         assertThat(result2, hasItem(new Car(2, 2009, "red", "Focus CC", "Ford")));
     }
@@ -197,11 +196,63 @@ public class CarStoreTest {
 
     @Test
     public void recolorCar() {
-        /// ...
+        EasyMock.expect(garage.readCar(1)).andReturn(new Car(1, 2005, "grey", "Megane CC", "Renault"));
+        Car car_as_recolored = new Car(1, 2005, "red", "Megane CC", "Renault");
+        EasyMock.expect(garage.updateCar(car_as_recolored)).andReturn(true);
+        EasyMock.expect(garage.readCar(1)).andReturn(new Car(1, 2005, "red", "Megane CC", "Renault"));
+        EasyMock.replay(garage);
+
+        //
+
+        boolean colorization = store.recolorCar(1, "red");
+        Car myNewCar = store.getCarCopyById(1);
+
+        //
+
+        assertEquals(true, colorization);
+        assertEquals("red", myNewCar.getColor());
+        assertEquals(1, myNewCar.getId());
     }
 
     @Test
+    public void recolorCar2() {
+        EasyMock.expect(garage.readCar(1)).andReturn(new Car(1, 2005, "grey", "Megane CC", "Renault"));
+        Car car_as_recolored = new Car(1, 2005, "grey", "Megane CC", "Renault");
+        EasyMock.expect(garage.updateCar(car_as_recolored)).andReturn(false);
+        EasyMock.expect(garage.readCar(1)).andReturn(new Car(1, 2005, "grey", "Megane CC", "Renault"));
+        EasyMock.replay(garage);
+
+        //
+
+        boolean colorization = store.recolorCar(1, "grey");
+        Car myNewCar = store.getCarCopyById(1);
+
+        //
+
+        assertEquals(false, colorization);
+        assertEquals("grey", myNewCar.getColor());
+        assertEquals(1, myNewCar.getId());
+    }
+
+
+    @Test
     public void getOldestCar() {
-        /// ...
+        LinkedList<Car> dummyDB = new LinkedList();
+        dummyDB.add(new Car(1, 2005, "grey", "Megane CC", "Renault"));
+        dummyDB.add(new Car(2, 2009, "red", "Focus CC", "Ford"));
+        dummyDB.add(new Car(3, 2014, "black", "Astra CC", "Opel"));
+
+        EasyMock.expect(garage.readAllCars()).andReturn(dummyDB);
+        EasyMock.replay(garage);
+
+        //
+
+        Car oldest_car_from_store = store.getOldestCar();
+        Car oldest_car_i_think = new Car(1, 2005, "grey", "Megane CC", "Renault");
+
+        //
+
+        assertEquals(oldest_car_i_think, oldest_car_from_store);
+
     }
 }

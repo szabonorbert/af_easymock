@@ -63,9 +63,9 @@ public class CarStore {
     public Car getOldestCar(){
         LinkedList<Car> allCars = garage.readAllCars();
         Car ret = null;
-        int max_year = -1;
+        int max_year = 10000;
         for(Car c: allCars){
-            if (c.getYear()>max_year){
+            if (c.getYear() < max_year){
                 ret = c;
                 max_year = c.getYear();
             }
