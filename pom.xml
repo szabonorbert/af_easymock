@@ -17,4 +17,10 @@
     </modules>
 
 
+    <properties>
+        <junit.version>4.12</junit.version>
+    </properties>
+
+    <build>
+    </build>
 </project>
